@@ -1,0 +1,45 @@
+apply plugin: 'groovy'
+
+apply plugin: FirstPlugin
+apply plugin: SecondPlugin
+apply plugin: ThirdPlugin
+
+class FirstPlugin implements Plugin<Project> {
+  void apply(Project project) {
+    project.task('first') << {
+      println "Hello from the FirstPlugin"
+    }
+  }
+}
+
+class SecondPlugin implements Plugin<Project> {
+  void apply(Project project) {
+    project.extensions.create("second", SecondPluginExtension)
+    project.task('second') << {
+      println project.second.message
+    }
+  }
+}
+
+class SecondPluginExtension {
+  def String message = 'Hello from second plugin extension'
+}
+
+class ThirdPlugin implements Plugin<Project> {
+  void apply(Project project) {
+    project.extensions.create("third", ThirdPluginExtension)
+    project.task('third') << {
+      println("${project.third.message} from ${project.third.who}")
+    }
+  }
+}
+
+class ThirdPluginExtension {
+  String message
+  String who
+}
+
+third {
+  message = 'Hi'
+  who = 'third'
+}

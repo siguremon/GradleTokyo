@@ -1,0 +1,12 @@
+buildscript {
+  repositories {
+    maven {
+      url uri('../repo')
+    }
+  }
+  dependencies {
+    classpath group: 'net.siguremon', name: 'customPlugin', version: '1.0-SNAPSHOT'
+  }
+}
+
+apply plugin: 'custom'
